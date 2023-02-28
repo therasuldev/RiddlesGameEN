@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riddles_game_en/core/model/user/user.dart';
+import 'package:riddles_game_en/core/provider/cubit/ads/ad_cubit.dart';
 import 'package:riddles_game_en/view/animations/loading_widget.dart';
 import 'package:riddles_game_en/view/utils/utils.dart';
 
@@ -19,68 +20,26 @@ class Profile extends R2StatefulWidget {
 
 class _ProfileState extends R2State<Profile> {
   final _userController = TextEditingController();
-  // BannerAd? _bannerAd;
-  // RewardedAd? _rewardedAd;
-  // int _rewardedScore = 0;
 
   @override
   void initState() {
     BlocProvider.of<UserBloc>(context).add(UserGet());
+    _adCubit = BlocProvider.of<AdCubit>(context);
+    _adCubit.loadAd();
     super.initState();
-    // _createBannerAd();
-    //_createRewardedAd();
   }
 
+  late AdCubit _adCubit;
+
   _update(UserState state) {
-    var uC = _userController.text.trim();
-    if (uC.length > 3 && uC.length < 12) {
+    var ctrlVal = _userController.text.trim();
+    if (ctrlVal.length > 3 && ctrlVal.length < 12) {
       context.read<UserBloc>().add(
-            UserAdd(user: UserModel(name: uC, score: state.user.score)),
+            UserAdd(user: UserModel(name: ctrlVal, score: state.user.score)),
           );
       _userController.clear();
     }
   }
-
-  // void _createBannerAd() {
-  //   _bannerAd = BannerAd(
-  //       size: AdSize.fullBanner,
-  //       adUnitId: AdmobService.bannerAdUnitId!,
-  //       listener: AdmobService.bannerAdListener,
-  //       request: const AdRequest())
-  //     ..load();
-  // }
-
-  // void _createRewardedAd() {
-  //   RewardedAd.load(
-  //     adUnitId: AdmobService.rewardedAdUnitId!,
-  //     request: const AdRequest(),
-  //     rewardedAdLoadCallback: RewardedAdLoadCallback(
-  //       onAdLoaded: (ad) => setState(() => _rewardedAd = ad),
-  //       onAdFailedToLoad: (error) => setState(() => _rewardedAd = null),
-  //     ),
-  //   );
-  // }
-
-  // void _showRewardedAd() {
-  //   if (_rewardedAd != null) {
-  //     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-  //       onAdDismissedFullScreenContent: (ad) {
-  //         ad.dispose();
-  //         _createRewardedAd();
-  //       },
-  //       onAdFailedToShowFullScreenContent: (ad, error) {
-  //         ad.dispose();
-  //         _createRewardedAd();
-  //       },
-  //     );
-  //     _rewardedAd!.show(
-  //       onUserEarnedReward: (ad, reward) {
-  //         setState(() => _rewardedScore++);
-  //       },
-  //     );
-  //     _rewardedAd = null;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +119,7 @@ class _ProfileState extends R2State<Profile> {
   Widget _isRegistered() {
     return Column(
       children: [
-        WatchRewardedAd(onPressed: () {}),
+        WatchRewardedAd(onPressed: () => _adCubit.showAd(context)),
         ViewUtils.defaultSizedBox,
         ChangeAppTheme(),
         ViewUtils.defaultSizedBox,

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:riddles_game_en/core/provider/bloc/user/user_bloc.dart';
+import 'package:riddles_game_en/core/provider/cubit/ads/ad_cubit.dart';
 import 'package:riddles_game_en/core/provider/cubit/app/app_cubit.dart';
 import 'package:riddles_game_en/core/provider/cubit/level/level_cubit.dart';
+import 'package:riddles_game_en/core/service/admob_service.dart';
 import 'package:riddles_game_en/start.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'core/app/intl.dart';
 import 'core/provider/bloc/game/game_bloc.dart';
@@ -27,6 +30,7 @@ class _MyAppState extends R2State<MyApp> {
         BlocProvider(create: (context) => GameBloc()),
         BlocProvider(create: (context) => UserBloc()),
         BlocProvider(create: (context) => LevelCubit()),
+        BlocProvider(create: (context) => AdCubit(adManager: AdManager())),
         BlocProvider(create: (context) => AppCubit()..initApp()),
       ],
       child: BlocBuilder<AppCubit, AppState>(
@@ -35,7 +39,12 @@ class _MyAppState extends R2State<MyApp> {
             debugShowCheckedModeBanner: false,
             title: 'Riddles Game EN',
             theme: state.theme,
-            home: Start(),
+            home: UpgradeAlert(
+              upgrader: Upgrader(
+                languageCode: state.langCode,
+              ),
+              child: Start(),
+            ),
             localizationsDelegates: [
               ridd.intl.delegate,
               GlobalMaterialLocalizations.delegate,

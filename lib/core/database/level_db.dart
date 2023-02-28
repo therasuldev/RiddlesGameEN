@@ -2,6 +2,7 @@ import 'package:riddles_game_en/core/app/riddle.dart';
 
 class LevelDB {
   final _ridd = Riddle();
+  
   addLevel(int index) async {
     await _ridd.cacheService.levels.put(index, index);
     return getLevel();

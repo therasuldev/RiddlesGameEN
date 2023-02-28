@@ -17,7 +17,6 @@ class Start extends R2StatefulWidget {
 }
 
 class _StartState extends R2State<Start> {
-  final _controller = PageController();
   int _pageIndex = 0;
 
   final List<Widget> _pages = [
@@ -28,16 +27,7 @@ class _StartState extends R2State<Start> {
 
   void _bottomTapped(int index) {
     _pageIndex = index;
-    _controller.animateToPage(
-      _pageIndex,
-      curve: Curves.ease,
-      duration: const Duration(milliseconds: 700),
-    );
     setState(() {});
-  }
-
-  void _pageChanged(int index) {
-    setState(() => _pageIndex = index);
   }
 
   @override
@@ -45,11 +35,7 @@ class _StartState extends R2State<Start> {
     return SafeArea(
       child: Scaffold(
         appBar: _riddleAppBar(_pageIndex),
-        body: PageView(
-          controller: _controller,
-          children: [..._pages],
-          onPageChanged: (v) => _pageChanged(v),
-        ),
+        body: [..._pages][_pageIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _pageIndex,
           items: _bottomNavigationBarItem,
@@ -109,7 +95,7 @@ class _StartState extends R2State<Start> {
 
   Color? _iconColor(bool isSelected) {
     if (isSelected) {
-      return Theme.of(context).backgroundColor.withGreen(160);
+      return Theme.of(context).colorScheme.background.withGreen(160);
     }
     return null;
   }

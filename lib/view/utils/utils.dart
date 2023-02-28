@@ -24,7 +24,7 @@ class ViewUtils {
       context,
       CustomSnackBar.info(
           message: msg,
-          backgroundColor: const Color.fromARGB(255, 58, 76, 108)),
+          backgroundColor: const Color.fromARGB(255, 255, 82, 70)),
     );
   }
 }
@@ -46,7 +46,7 @@ class GenerateDialog extends AlertDialog {
               maxLines: 2,
               style: Theme.of(context)
                   .textTheme
-                  .headline6!
+                  .titleLarge!
                   .copyWith(fontSize: 18)),
           actions: [
             TextButton(

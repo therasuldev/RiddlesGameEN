@@ -12,14 +12,3 @@ class AddGameRiddles extends GameEvent {
   final String category;
   AddGameRiddles(this.category);
 }
-
-class AddScore extends GameEvent {
-  final int score;
-  AddScore(this.score);
-}
-
-class GetScore extends GameEvent {
-  final String? category;
-
-  GetScore({this.category});
-}
