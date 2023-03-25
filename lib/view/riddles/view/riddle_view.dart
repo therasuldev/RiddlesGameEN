@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:riddles_game_en/core/database/riddle_db.dart';
 import 'package:riddles_game_en/core/provider/cubit/app/app_cubit.dart';
 import 'package:riddles_game_en/core/repository/cache_repository.dart';
+import 'package:riddles_game_en/core/service/ads/admob_service.dart';
 import 'package:riddles_game_en/view/animations/fade_animation.dart';
 import 'package:riddles_game_en/view/animations/loading_widget.dart';
 
@@ -84,7 +85,7 @@ class _RiddleViewState extends R2State<RiddleView> with RiddleViewMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       FadeInLeftAnimation(
-                        delay: Durations.low.delay,
+                        delay: Durations.normal.delay,
                         child: ChangeQuestionButton(
                           img: Assets.png.back.path,
                           onTap: () => _previousQuestion(widget.category),
@@ -95,7 +96,7 @@ class _RiddleViewState extends R2State<RiddleView> with RiddleViewMixin {
                         style: R2Typography.info.blueGray.size25,
                       ),
                       FadeInRightAnimation(
-                        delay: Durations.low.delay,
+                        delay: Durations.normal.delay,
                         child: ChangeQuestionButton(
                           img: Assets.png.next.path,
                           onTap: () async {
@@ -119,6 +120,8 @@ class _RiddleViewState extends R2State<RiddleView> with RiddleViewMixin {
 mixin RiddleViewMixin on R2State<RiddleView> {
   int _startIndex = 0;
   bool _showText = false;
+
+  final AdManager _adManager = AdManager();
   final _db = RiddleRepository(
     cahceRepo: CacheRepository(),
     path: DataPath.riddles.getPath(),
@@ -134,6 +137,11 @@ mixin RiddleViewMixin on R2State<RiddleView> {
           setState(() => _showText = false);
         }
       });
+    }
+    if (_startIndex != 0 && (_startIndex + 1) % 7 == 0) {
+      _adManager.loadInterstitialAd();
+    } else if (_startIndex % 7 == 0) {
+      _adManager.showInterstitialAd();
     }
 
     return _startIndex;

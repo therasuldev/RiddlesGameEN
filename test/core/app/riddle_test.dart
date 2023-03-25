@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:riddles_game_en/core/app/intl.dart';
 import 'package:riddles_game_en/core/app/riddle.dart';
-import 'package:riddles_game_en/core/service/service.dart';
+import 'package:riddles_game_en/core/service/cache/service.dart';
 
 void main() {
   late Riddle ridd;

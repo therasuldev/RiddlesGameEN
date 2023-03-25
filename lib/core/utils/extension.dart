@@ -69,6 +69,9 @@ extension TextColorExt on TextStyle {
   TextStyle get blueGray => copyWith(
         color: const Color.fromARGB(255, 41, 127, 135),
       );
+  TextStyle get lightBlueGray => copyWith(
+        color: Colors.blueGrey.shade300,
+      );
   TextStyle get orangeWithOpacity => copyWith(
         color: ColorName.orangeAccent.withOpacity(.5),
       );

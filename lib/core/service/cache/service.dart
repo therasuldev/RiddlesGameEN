@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:riddles_game_en/core/service/boxes.dart';
+import 'package:riddles_game_en/core/service/cache/boxes.dart';
 
 class CacheService {
   Box get riddles => Hive.box(Boxes.riddles);

@@ -6,9 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as path;
-import 'package:path_provider_android/path_provider_android.dart';
 import 'package:riddles_game_en/core/provider/observer.dart';
-import 'package:riddles_game_en/core/service/boxes.dart';
+import 'package:riddles_game_en/core/service/cache/boxes.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'app.dart';
@@ -16,16 +15,17 @@ import 'core/app/intl.dart';
 import 'core/app/riddle.dart';
 import 'core/model/riddle_model/riddle_model.dart';
 import 'core/model/user/user.dart';
-import 'core/service/service.dart';
+import 'core/service/cache/service.dart';
 
 void main() async {
-  if (Platform.isAndroid) PathProviderAndroid.registerWith();
+  //if (Platform.isAndroid) PathProviderAndroid.registerWith();
+
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
 
   await Upgrader.clearSavedSettings();
 
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await path
       .getApplicationDocumentsDirectory()

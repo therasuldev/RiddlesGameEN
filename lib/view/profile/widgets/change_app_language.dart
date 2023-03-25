@@ -34,7 +34,8 @@ class _ChangeAppLanguageState extends R2State<ChangeAppLanguage> {
               child: Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 child: Container(
                   alignment: Alignment.center,
                   height: MediaQuery.of(context).size.height * .1,
@@ -50,11 +51,13 @@ class _ChangeAppLanguageState extends R2State<ChangeAppLanguage> {
                         child: Image.asset(Assets.png.ru.path),
                       ),
                       Positioned(
-                          top: -5,
-                          right: -5,
-                          child: Visibility(
-                              visible: state.langCode == 'ru',
-                              child: Image.asset(Assets.png.verified.path)))
+                        top: -5,
+                        right: -5,
+                        child: Visibility(
+                          visible: state.langCode == 'ru',
+                          child: Image.asset(Assets.png.verified.path),
+                        ),
+                      )
                     ],
                   ),
                 ),
