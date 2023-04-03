@@ -3,7 +3,7 @@ description: riddles game en
 
 publish_to: 'none'
 
-version: 2.0.1+3
+version: 2.0.2+4
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
